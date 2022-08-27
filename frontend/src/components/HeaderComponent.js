@@ -11,9 +11,9 @@ class Header extends Component {
           <Nav navbar>
               Welcome to Cinnamon~!
               <div className="nav-buttons">
-                  <Button variant="primary" className="nav-home">Home</Button>
+                  {/* <Button variant="primary" className="nav-home">Home</Button> */}
 
-                  <Button variant="primary" className="nav-sound-check">Sound Check</Button>
+                  {/* <Button variant="primary" className="nav-sound-check">Sound Check</Button> */}
 
                   <Button variant="primary" className="nav-about">About</Button>
               </div>
