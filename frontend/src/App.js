@@ -3,10 +3,10 @@ import PitchDetect from './components/PitchDetect';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         Cinnamon
-      <PitchDetect />
+        <PitchDetect />
       </header>
     </div>
   );

@@ -1,60 +1,60 @@
-var Cinnamon = artifacts.require('Cinnamon')
-var Marketplace = artifacts.require('Marketplace')
+var Cinnamon = artifacts.require('Cinnamon');
+var Marketplace = artifacts.require('Marketplace');
 
 async function logNftLists(marketplace) {
-  let listedNfts = await marketplace.getListedNfts.call()
-  const accountAddress = '0x81Db7f0D315CB3F2f25091597a061B0F972D7516'
-  let myNfts = await marketplace.getMyNfts.call({ from: accountAddress })
+  let listedNfts = await marketplace.getListedNfts.call();
+  const accountAddress = '0x81Db7f0D315CB3F2f25091597a061B0F972D7516';
+  let myNfts = await marketplace.getMyNfts.call({from: accountAddress});
   let myListedNfts = await marketplace.getMyListedNfts.call({
     from: accountAddress,
-  })
-  console.log(`listedNfts: ${listedNfts.length}`)
-  console.log(`myNfts: ${myNfts.length}`)
-  console.log(`myListedNfts ${myListedNfts.length}\n`)
+  });
+  console.log(`listedNfts: ${listedNfts.length}`);
+  console.log(`myNfts: ${myNfts.length}`);
+  console.log(`myListedNfts ${myListedNfts.length}\n`);
 }
 
 const main = async (cb) => {
   try {
-    const cinnamon = await Cinnamon.deployed()
-    const marketplace = await Marketplace.deployed()
+    const cinnamon = await Cinnamon.deployed();
+    const marketplace = await Marketplace.deployed();
 
-    console.log('MINT AND LIST 3 NFTs')
-    let listingFee = await marketplace.getListingFee()
-    listingFee = listingFee.toString()
-    let txn1 = await cinnamon.mint('URI1')
-    let tokenId1 = txn1.logs[2].args[0].toNumber()
+    console.log('MINT AND LIST 3 NFTs');
+    let listingFee = await marketplace.getListingFee();
+    listingFee = listingFee.toString();
+    let txn1 = await cinnamon.mint('URI1');
+    let tokenId1 = txn1.logs[2].args[0].toNumber();
     await marketplace.listNft(cinnamon.address, tokenId1, 1, {
       value: listingFee,
-    })
-    console.log(`Minted and listed ${tokenId1}`)
-    let txn2 = await cinnamon.mint('URI1')
-    let tokenId2 = txn2.logs[2].args[0].toNumber()
+    });
+    console.log(`Minted and listed ${tokenId1}`);
+    let txn2 = await cinnamon.mint('URI1');
+    let tokenId2 = txn2.logs[2].args[0].toNumber();
     await marketplace.listNft(cinnamon.address, tokenId2, 1, {
       value: listingFee,
-    })
-    console.log(`Minted and listed ${tokenId2}`)
-    let txn3 = await cinnamon.mint('URI1')
-    let tokenId3 = txn3.logs[2].args[0].toNumber()
+    });
+    console.log(`Minted and listed ${tokenId2}`);
+    let txn3 = await cinnamon.mint('URI1');
+    let tokenId3 = txn3.logs[2].args[0].toNumber();
     await marketplace.listNft(cinnamon.address, tokenId3, 1, {
       value: listingFee,
-    })
-    console.log(`Minted and listed ${tokenId3}`)
-    await logNftLists(marketplace)
+    });
+    console.log(`Minted and listed ${tokenId3}`);
+    await logNftLists(marketplace);
 
-    console.log('BUY 2 NFTs')
-    await marketplace.buyNft(cinnamon.address, tokenId1, { value: 1 })
-    await marketplace.buyNft(cinnamon.address, tokenId2, { value: 1 })
-    await logNftLists(marketplace)
+    console.log('BUY 2 NFTs');
+    await marketplace.buyNft(cinnamon.address, tokenId1, {value: 1});
+    await marketplace.buyNft(cinnamon.address, tokenId2, {value: 1});
+    await logNftLists(marketplace);
 
-    console.log('RESELL 1 NFT')
+    console.log('RESELL 1 NFT');
     await marketplace.resellNft(cinnamon.address, tokenId2, 1, {
       value: listingFee,
-    })
-    await logNftLists(marketplace)
+    });
+    await logNftLists(marketplace);
   } catch (err) {
-    console.log('Doh! ', err)
+    console.log('Doh! ', err);
   }
-  cb()
-}
+  cb();
+};
 
-module.exports = main
+module.exports = main;

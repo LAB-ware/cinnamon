@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const CinnamonSchema = new mongoose.Schema(
   {
@@ -19,7 +19,7 @@ const CinnamonSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true },
-)
+  {timestamps: true}
+);
 
-module.exports = mongoose.model('cinnamons', CinnamonSchema)
+module.exports = mongoose.model('cinnamons', CinnamonSchema);

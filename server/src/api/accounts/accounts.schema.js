@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { hash, encrypt } from "../../utils/crypto";
+import mongoose from 'mongoose';
+import {hash, encrypt} from '../../utils/crypto';
 
 const AccountSchema = new mongoose.Schema(
   {
@@ -33,16 +33,16 @@ const AccountSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  {timestamps: true}
 );
 
-AccountSchema.pre("save", function (next) {
+AccountSchema.pre('save', function (next) {
   const schemaObj = this;
   let account = schemaObj._doc;
 
   if (
     (schemaObj.isNew && account.login.password) ||
-    schemaObj.isModified("login.password")
+    schemaObj.isModified('login.password')
   ) {
     account.login.password = hash(account.login.password);
   }
@@ -50,4 +50,4 @@ AccountSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("accounts", AccountSchema);
+module.exports = mongoose.model('accounts', AccountSchema);
