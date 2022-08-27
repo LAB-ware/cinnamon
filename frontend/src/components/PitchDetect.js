@@ -1,56 +1,109 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './PitchDetect.css';
 import Wad from 'web-audio-daw';
 
 let PitchDetect = () => {
-  const [frequency, setFrequency] = useState(0);
-  const [listening, isListening] = useState(false);
-  // const [voice, setVoice] = useState();
-  // const [tuner, setTuner] = useState();
-  const [animationFrame, setAnimationFrame] = useState(0);
-  const [pitch, setPitch] = useState();
+  const [listen, toggleListen] = useState(false);
+  const [audio, setAudio] = useState();
+  const requestListenFrame = useRef();
+  const prevRequestListenFrame = useRef();
+  const previousListen = useRef(listen);
 
-  // At this point, your browser will ask for permission to access your microphone.
+  let logPitch = (frameRef) => {
+    
+    if (prevRequestListenFrame.current != undefined) {
+      // console.log('pitch', tuner.pitch);
+      previousListen.current = listen;
+      toggleListen(prevState => {
+        if (!listen) {
+          requestListenFrame.current = undefined;
+        } else {
+        }
+        return prevState;
+      });
+    }
+    prevRequestListenFrame.current = frameRef;
+    requestListenFrame.current = requestAnimationFrame(logPitch);
+    // else requestListenFrame.current = null;
+    // setPitch(tuner.pitch);
+    // if (listen) requestAnimationFrame(logPitch);
+  };
+
+  useEffect(() => {
+    if (listen) {
+      requestListenFrame.current = requestAnimationFrame(logPitch);
+      // TODO: Consider checking if frequency is ultrasonic first
+      recordAudio();
+    }
+    // } else {
+      // return () => cancelAnimationFrame(requestListenFrame.current);
+    // }
+  }, [listen]); // Make sure the effect runs only once
+
+  // Mint the NFT
+  useEffect(() => {
+    // Make API call
+    if (audio) {
+    } 
+  }, [audio]);
+
+  // Initiate the mic and audio processor
+  // Browser prompt for permission to access your microphone.
   let voice = new Wad({source : 'mic' });
   var tuner = new Wad.Poly();
-  // If you're not using headphones, you can eliminate microphone feedback by muting the output from the tuner.
+  // If not using headphones, eliminate microphone feedback by muting the output from the tuner.
   tuner.setVolume(0);
   tuner.add(voice);
-  // You must give your browser permission to access your microphone before calling play().
-  voice.play();
 
-  // The tuner is now calculating the pitch and note name of its input 60 times per second. These values are stored in <code>tuner.pitch</code> and <code>tuner.noteName</code>.
-  tuner.updatePitch();
-
-  let startListening = () => {
-    if (!listening) {
-      isListening(true);
-      
+  let detectFrequency = () => {
+    if (!listen) {
+      toggleListen(true);
+      tuner.updatePitch();
+      voice.play();
       logPitch();
+    } else {
+      toggleListen(false);
+      tuner.stopUpdatingPitch();
+      voice.stop();
     }
   }
 
-  let stopListening = () => {
-    isListening(false);
-    tuner.stopUpdatingPitch();
-    voice.stop();
-  }
+  let recordAudio = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start();
 
-  let logPitch = function() {
-    console.log(tuner.pitch);
-    setPitch(tuner.pitch);
-    // requestAnimationFrame(logPitch);
-  };
+        const audioChunks = [];
+
+        mediaRecorder.addEventListener("dataavailable", event => {
+          audioChunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener("stop", () => {
+          setAudio(audioChunks);
+          // For testing
+          // const audioBlob = new Blob(audioChunks);
+          // const audioUrl = URL.createObjectURL(audioBlob);
+          // const audio = new Audio(audioUrl);
+          // audio.play();
+        });
+
+        setTimeout(() => {
+          mediaRecorder.stop();
+        }, 3000);
+      });
+  }
 
   return (
     <div className="pitchDetectContainer">
       <div className="frequencyDisplay">
-        {pitch}
+        Display Loading State
       </div>
       <div className="frequencyListener" onClick={() => {
-        !listening ? startListening() : stopListening();
+        detectFrequency();
       }}>
-        {!listening ? 'Press to Listen' : 'Press to Cancel'}
+        {!listen ? 'Press to Listen' : 'Press to Cancel'}
       </div>
     </div>
   );
