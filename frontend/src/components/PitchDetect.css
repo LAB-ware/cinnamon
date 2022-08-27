@@ -1,0 +1,22 @@
+.pitchDetectContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  justify-content: flex-end;
+  height: 50vh;
+}
+
+.frequencyDisplay {
+  margin: 30px;
+}
+
+.frequencyListener {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 30px;
+  padding: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
