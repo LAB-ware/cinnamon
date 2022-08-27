@@ -5,19 +5,26 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && babel src --out-dir dist  --copy-files",
-    "start": "nodemon --exec babel-node src/server.js",
-    "start:prod": "node dist/server.js",
+    "start": "NODE_ENV=development nodemon --exec babel-node src/server.js",
+    "start:prod": "NODE_ENV=production node dist/server.js",
+    "migrate:dev": "truffle migrate --network development",
+    "migrate:test": "truffle migrate --network goerli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@metamask/providers": "^9.1.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "@truffle/hdwallet-provider": "^2.0.14",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongoose": "^6.5.3"
+    "luxon": "^3.0.1",
+    "mongoose": "^6.5.3",
+    "web3": "^1.7.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
