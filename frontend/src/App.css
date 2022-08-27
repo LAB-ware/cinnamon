@@ -1,3 +1,28 @@
+
+.cinnamon-roll {
+  animation: App-logo-spin infinite 20s linear;
+  width: 20%;
+  height: 20%;
+  padding: 20px 30px 20px 30px;
+}
+
+.navbar-dark {
+  position: sticky;
+  top: 0;
+  padding: 20px 30px 20px 30px;
+  margin: 0px auto;
+  background-color: #DC9E82;
+}
+
+.sound-check {
+  align-items: center;
+  padding: 20px 30px 20px 30px;
+}
+
+.sound-button {
+  background-color: pink;
+}
+
 .App {
   text-align: center;
 }
@@ -8,7 +33,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
+  .animate-cinnamon {
     animation: App-logo-spin infinite 20s linear;
   }
 }
