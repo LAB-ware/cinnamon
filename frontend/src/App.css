@@ -1,3 +1,28 @@
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px 5px 30px;
+  gap: 20px;
+}
+
+.nav-home {
+  color: #53131E;
+}
+
+.nav-sound-check {
+  color: #53131E;
+}
+
+.nav-about {
+  color: #53131E;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+} 
 
 .cinnamon-roll {
   animation: App-logo-spin infinite 20s linear;

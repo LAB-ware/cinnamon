@@ -5,7 +5,7 @@ import SoundCheck from './SoundCheckComponent';
 
 class Main extends Component {
   render() {
-    return(
+   return(
       <div>
         <Header />
         <SoundCheck />
