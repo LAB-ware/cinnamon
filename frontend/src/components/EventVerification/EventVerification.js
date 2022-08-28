@@ -15,7 +15,7 @@ const EventVerification = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {
-      x.innerHTML = "Geolocation not supported.";
+      console.log("Geolocation not supported.");
     }
   }
 
