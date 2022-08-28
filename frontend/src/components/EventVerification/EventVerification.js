@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import PitchDetect from '../PitchDetect/PitchDetect';
+import styles from './EventVerification';
+
+const testEventCode = 123456;
 
 const EventVerification = () => {
   const [event, setEvent] = useState({});
@@ -11,24 +15,39 @@ const EventVerification = () => {
    *  Pass event object as prop to PitchDetect component
    */
 
+  function gatherEventDetails() {
+    getLocation();
+  }
+
   function getLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      navigator.geolocation.getCurrentPosition(position => {
+        setLocation(position);
+      });
     } else {
       console.log("Geolocation not supported.");
     }
   }
 
-  function showPosition(position) {
-    setLocation(position);
+  function getEventCode(e) { 
+    e.target.value(); 
   }
 
-  getLocation();
+  gatherEventDetails();
 
   return(
     <div>
-      {!code && <div></div>}
-      {location && <div>{location}</div>}
+      {!code &&
+        <div className="EventVerificationContainer">
+          <div className="EventVerificationCodeInput">
+            <input onChange={e => getEventCode(e)} type="number" />
+            <div>Enter Event Code</div>
+          </div>
+        </div>
+      }
+      {code &&
+        <PitchDetect />
+      }
     </div>
   )
 }

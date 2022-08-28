@@ -1,0 +1,15 @@
+.EventVerificationContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.EventVerificationCodeInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  width: 500px;
+  border: 1px solid white;
+  border-radius: 20px;
+}
