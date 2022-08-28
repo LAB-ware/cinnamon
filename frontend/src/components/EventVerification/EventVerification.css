@@ -1,15 +1,74 @@
+.AppContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  align-items: center;
+  justify-content: space-between;
+  height: 60vh;
+  width: 100vw;
+}
+
+.PinCodeInput {
+  padding-top: 20px;
+  padding-left: 5px;
+  letter-spacing: 35px;
+  font-size: 30px;
+  border: 0;
+  background-image: linear-gradient(to left, white 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  background-position-x: 35px;
+  width: 280px;
+  outline : none;
+  background-color: #282C34;
+  align-self: center;
+  color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .EventVerificationContainer {
   display: flex;
   flex-direction: column;
   align-self: center;
+  width: auto;
 }
 
 .EventVerificationCodeInput {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 200px;
-  width: 500px;
-  border: 1px solid white;
+  height: 35vh;
+  width: 80vw;
   border-radius: 20px;
+}
+
+@media screen and (max-width: 400px) {
+  .EventVerificationCodeInput {
+    width: 85vw;
+    height: 45vh;
+  }
+}
+
+@media screen and (min-width: 401px) {
+  .EventVerificationCodeInput {
+    width: 400px;
+    height: 200px;
+  }
+}
+
+@media screen and (min-width: 365px) {
+  .EventVerificationCodeInput {
+    border: 1px solid white;
+  }
+}
+
+.EventVerificationText {
+  margin-top: 12px;
+  font-size: 14px;
 }

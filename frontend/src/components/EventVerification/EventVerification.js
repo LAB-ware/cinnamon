@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PitchDetect from '../PitchDetect/PitchDetect';
-import styles from './EventVerification';
+import './EventVerification.css'
 
 const testEventCode = 123456;
 
@@ -8,6 +8,10 @@ const EventVerification = () => {
   const [event, setEvent] = useState({});
   const [code, setCode] = useState();
   const [location, setLocation] = useState({});
+
+  useEffect(() => {
+    gatherEventDetails();
+  }, [])
 
   /**
    *  Create input for code
@@ -17,12 +21,17 @@ const EventVerification = () => {
 
   function gatherEventDetails() {
     getLocation();
+
+    if (code && location) {
+      setEvent({code: code, location: [location.coords.latitude, location.coords.longitude]});
+    }
   }
 
   function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         setLocation(position);
+        console.log(location, position);
       });
     } else {
       console.log("Geolocation not supported.");
@@ -30,23 +39,21 @@ const EventVerification = () => {
   }
 
   function getEventCode(e) { 
-    e.target.value(); 
+    console.log(e.target.value);
   }
 
-  gatherEventDetails();
-
   return(
-    <div>
-      {!code &&
+    <div className='AppContent'>
+      {!event.code &&
         <div className="EventVerificationContainer">
           <div className="EventVerificationCodeInput">
-            <input onChange={e => getEventCode(e)} type="number" />
-            <div>Enter Event Code</div>
+            <input onChange={(e) => {getEventCode(e)}} className="PinCodeInput" type="number" maxLength="6" />
+            <div className="EventVerificationText">Enter Event Code Above</div>
           </div>
         </div>
       }
-      {code &&
-        <PitchDetect />
+      {event.code && event.location &&
+        <PitchDetect eventMetadata={event} />
       }
     </div>
   )
