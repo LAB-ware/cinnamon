@@ -7,8 +7,6 @@
     "build": "rimraf dist && babel src --out-dir dist  --copy-files",
     "start": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
-    "migrate:dev": "truffle migrate --network development",
-    "migrate:test": "truffle migrate --network goerli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -35,6 +33,7 @@
     "@babel/preset-env": "^7.18.10",
     "@faker-js/faker": "^7.4.0",
     "bcryptjs": "^2.4.3",
+    "erc721a": "^4.2.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose-encryption": "^2.1.2",
     "nodemon": "^2.0.19",

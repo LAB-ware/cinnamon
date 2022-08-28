@@ -1,5 +1,5 @@
 import express from 'express';
-import CinnamonSchema from './cinnamons.model';
+import CinnamonSchema from './cinnamons.schema';
 import {getWeb3Provider} from '../../utils/web3provider';
 import CinnamonContract from '../../artifacts/Cinnamon.json';
 import MarketplaceContract from '../../artifacts/Marketplace.json';
@@ -22,6 +22,7 @@ router.post('/mint', async (req, res) => {
     CinnamonContract.abi,
     cinnamonContractAddress
   );
+
   const marketplaceInstance = new web3.eth.Contract(
     MarketplaceContract.abi,
     marketplaceContractAddress
@@ -34,32 +35,39 @@ router.post('/mint', async (req, res) => {
   const gasPrice = await web3.eth.getGasPrice();
   console.log('current gas prices', gasPrice);
 
-  const senderAccount =
-    process.env.NODE_ENV === 'production' && process.env.CINNAMON_GOERLI_ACCOUNT
-      ? process.env.CINNAMON_GOERLI_ACCOUNT
-      : (await web3.eth.getAccounts())[0];
+  let senderAccount;
+  if (process.env.NETWORK === 'rinkeby') {
+    senderAccount = process.env.LABWARE_GOERLI_ACCOUNT;
+  } else if (process.env.NETWORK === 'goerli') {
+    senderAccount = process.env.LABWARE_RINKEBY_ACCOUNT;
+  } else {
+    senderAccount = (await web3.eth.getAccounts())[0];
+  }
 
   cinnamonInstance.methods
-    .mint(req.body.cinnamonMetadataUrl)
+    .mint('test')
     .send({from: senderAccount})
     .on('receipt', (receipt) => {
       console.log('minted cinnamon', receipt);
-      const newCinnamon = new CinnamonSchema({
-        metadata: req.body.metadata,
-        metadataUrl: req.body.metadataUrl,
-        nftAssetUrl: req.body.nftAssetUrl,
-      });
+      // const newCinnamon = new CinnamonSchema({
+      //   metadata: req.body.metadata,
+      //   metadataUrl: req.body.metadataUrl,
+      //   nftAssetUrl: req.body.nftAssetUrl,
+      // });
 
-      console.log('saving cinnamon data to db', newCinnamon);
-      newCinnamon.save((err, doc) => {
-        if (err) {
-          return res.status(400).json({
-            value: doc,
-            msg: 'Unable to save cinnamon.',
-          });
-        }
-        res.status(200).send(doc);
-      });
+      // console.log('saving cinnamon data to db', newCinnamon);
+      // newCinnamon.save((err, doc) => {
+      //   if (err) {
+      //     return res.status(400).json({
+      //       value: doc,
+      //       msg: 'Unable to save cinnamon.',
+      //     });
+      //   }
+      //   res.status(200).send(doc);
+      // });
     });
+
+  res.send('mint complete');
 });
+
 export default router;

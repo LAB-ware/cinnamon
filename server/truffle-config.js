@@ -18,10 +18,8 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+require('dotenv').config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
   contracts_build_directory: './src/artifacts',
@@ -49,6 +47,16 @@ module.exports = {
       network_id: '*', // Any network (default: none)
     },
 
+    rinkeby: {
+      provider: () =>
+        new HDWalletProvider(
+          process.env.WALLET_MNEMONIC,
+          `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`
+        ),
+      network_id: 4,
+      from: process.env.LABWARE_RINKEBY_ACCOUNT,
+    },
+
     goerli: {
       provider: () =>
         new HDWalletProvider(
@@ -56,7 +64,7 @@ module.exports = {
           `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`
         ),
       network_id: 5,
-      from: process.env.TRUJO_GOERLI_ACCOUNT,
+      from: process.env.LABWARE_GOERLI_ACCOUNT,
       gas: 5500000,
       gasPrice: 10000000000, // 10 gwei
     },
