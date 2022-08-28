@@ -8,6 +8,7 @@ const EventVerification = () => {
   const [event, setEvent] = useState({});
   const [code, setCode] = useState();
   const [location, setLocation] = useState({});
+  const [eventCode, setEventCode] = useState("");
 
   /**
    *  Create input for code
@@ -29,8 +30,14 @@ const EventVerification = () => {
     }
   }
 
-  function getEventCode(e) { 
-    e.target.value(); 
+  const handleEventCode = (e) => {
+    console.log("TEST EVENT CODE: ", testEventCode);
+    console.log("EVENT CODE: ", parseInt(e));
+
+    if(e.length === 6 && testEventCode === parseInt(e)) {
+      setEventCode(eventCode);
+      setCode(true);
+    } 
   }
 
   gatherEventDetails();
@@ -40,8 +47,7 @@ const EventVerification = () => {
       {!code &&
         <div className="EventVerificationContainer">
           <div className="EventVerificationCodeInput">
-            <input onChange={e => getEventCode(e)} type="number" />
-            <div>Enter Event Code</div>
+              <input type="number" onChange={e => handleEventCode(e.target.value)}  />
           </div>
         </div>
       }
