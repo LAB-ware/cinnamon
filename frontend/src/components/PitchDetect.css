@@ -18,5 +18,16 @@
   border-radius: 30px;
   padding: 10px;
   justify-content: center;
+}
+
+.enabledClick {
   cursor: pointer;
+  pointer-events: pointer;
+}
+
+.disabledClick {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #ffffff85;
+  border-color: #ffffff85;
 }

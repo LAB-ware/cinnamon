@@ -1,10 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Wad from 'web-audio-daw';
 import './PitchDetect.css';
+import axios from 'axios';
+
+const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
 let PitchDetect = () => {
   const [listen, toggleListen] = useState(false);
+  const [frequency, setFrequency] = useState(0);
   const [audio, setAudio] = useState();
+  const [audioPin, setAudioPin] = useState();
   const requestListenFrame = useRef();
 
   // // Mint the NFT
@@ -23,8 +28,25 @@ let PitchDetect = () => {
   tuner.setVolume(0);
   tuner.add(voice);
 
+  const postAudioMetadaToPinata = async (audioMetadata) => {
+    const audioMetadataRes = await axios.post(
+      `${PINATA_URL}/pinJSONToIPFS`,
+      audioMetadata,
+      {
+        headers: {
+          pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+          pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET_KEY,
+        },
+      }
+    );
+
+    console.log('Metadata upload successful', audioMetadataRes.data);
+    return `ipfs://${audioMetadataRes.data.IpfsHash}`;
+  };
+
   const logPitch = () => {
     console.log('pitch', tuner.pitch);
+    setFrequency(tuner.pitch);
     requestListenFrame.current = requestAnimationFrame(logPitch);
   };
 
@@ -33,15 +55,15 @@ let PitchDetect = () => {
       toggleListen(true);
       tuner.updatePitch();
       voice.play();
-      // TODO: Consider checking if frequency is ultrasonic first
       recordAudio();
       requestListenFrame.current = requestAnimationFrame(logPitch);
-    } else {
+    }
+    setTimeout(() => {
       toggleListen(false);
       tuner.stopUpdatingPitch();
       voice.stop();
       cancelAnimationFrame(requestListenFrame.current);
-    }
+    }, 3500)
   };
 
   let recordAudio = () => {
@@ -54,11 +76,17 @@ let PitchDetect = () => {
         audioChunks.push(event.data);
       });
 
-      mediaRecorder.addEventListener('stop', () => {
+      mediaRecorder.addEventListener('stop', async () => {
         setAudio(audioChunks);
 
+        const audioBlob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+        try {
+          let pinnedAudio = await postAudioMetadaToPinata(audioBlob);
+          setAudioPin(pinnedAudio);
+        } catch (e) {
+          console.log('error', e);
+        }
         // For testing
-        // const audioBlob = new Blob(audioChunks);
         // const audioUrl = URL.createObjectURL(audioBlob);
         // const audio = new Audio(audioUrl);
         // audio.play();
@@ -72,14 +100,14 @@ let PitchDetect = () => {
 
   return (
     <div className='pitchDetectContainer'>
-      <div className='frequencyDisplay'>Display Loading State</div>
+      <div className='frequencyDisplay'>{frequency} Display Loading State</div>
       <div
-        className='frequencyListener'
+        className={`frequencyListener ${listen ? 'disabledClick' : 'enabledClick'}`}
         onClick={() => {
           detectFrequency();
         }}
       >
-        {!listen ? 'Press to Listen' : 'Press to Cancel'}
+        {!listen ? 'Press to Listen' : 'Listening...'}
       </div>
     </div>
   );
