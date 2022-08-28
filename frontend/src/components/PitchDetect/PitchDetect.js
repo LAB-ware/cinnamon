@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Wad from 'web-audio-daw';
-import './PitchDetect.css';
 import axios from 'axios';
+import './PitchDetect.css';
+import LongPress from '../Buttons/LongPress';
 
 const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
@@ -63,7 +64,7 @@ let PitchDetect = () => {
       tuner.stopUpdatingPitch();
       voice.stop();
       cancelAnimationFrame(requestListenFrame.current);
-    }, 3500)
+    }, 3500);
   };
 
   let recordAudio = () => {
@@ -86,6 +87,7 @@ let PitchDetect = () => {
         } catch (e) {
           console.log('error', e);
         }
+
         // For testing
         // const audioUrl = URL.createObjectURL(audioBlob);
         // const audio = new Audio(audioUrl);
@@ -94,21 +96,32 @@ let PitchDetect = () => {
 
       setTimeout(() => {
         mediaRecorder.stop();
+        toggleListen(false);
       }, 3000);
     });
   };
 
   return (
     <div className='pitchDetectContainer'>
-      <div className='frequencyDisplay'>{frequency} Display Loading State</div>
-      <div
-        className={`frequencyListener ${listen ? 'disabledClick' : 'enabledClick'}`}
+      <LongPress
+        className={`frequencyListener ${listen ? 'conic' : ''}`}
+        forceStop={audio && !listen}
         onClick={() => {
+          console.log('clicked');
+        }}
+        onLongPress={() => {
+          console.log('start long press');
+          toggleListen(true);
           detectFrequency();
         }}
-      >
-        {!listen ? 'Press to Listen' : 'Listening...'}
-      </div>
+        onLongPressDone={() => {
+          console.log('stopped long press');
+          toggleListen(false);
+          // console.log(audio);
+        }}
+        text={!listen ? 'Press to Listen' : 'Listening...'}
+      />
+      <div className='frequencyDisplay'>{frequency} Display Loading State</div>
     </div>
   );
 };

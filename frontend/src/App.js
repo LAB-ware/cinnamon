@@ -1,5 +1,5 @@
 import './App.css';
-import PitchDetect from './components/PitchDetect';
+import PitchDetect from './components/PitchDetect/PitchDetect';
 
 function App() {
   return (
