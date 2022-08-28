@@ -1,6 +1,5 @@
 import { Component } from 'react';
-import { Navbar, Nav, NavItem} from 'reactstrap';
-import Button from 'react-bootstrap/Button';
+import { Navbar, Nav } from 'reactstrap';
 
 
 class Header extends Component {
@@ -10,13 +9,6 @@ class Header extends Component {
         <Navbar dark expand="md"> 
           <Nav navbar>
               Welcome to Cinnamon~!
-              <div className="nav-buttons">
-                  {/* <Button variant="primary" className="nav-home">Home</Button> */}
-
-                  {/* <Button variant="primary" className="nav-sound-check">Sound Check</Button> */}
-
-                  <Button variant="primary" className="nav-about">About</Button>
-              </div>
           </Nav>
         </Navbar>
       </div>
