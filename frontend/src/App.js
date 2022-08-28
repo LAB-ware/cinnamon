@@ -1,4 +1,5 @@
 import './App.css';
+import EventVerification from './components/EventVerification/EventVerification';
 import PitchDetect from './components/PitchDetect/PitchDetect';
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         Cinnamon
-        <PitchDetect />
+        <EventVerification />
       </header>
     </div>
   );

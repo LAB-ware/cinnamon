@@ -6,7 +6,7 @@ import LongPress from '../Buttons/LongPress';
 
 const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
-let PitchDetect = () => {
+let PitchDetect = (eventMetadata) => {
   const [listen, toggleListen] = useState(false);
   const [frequency, setFrequency] = useState(0);
   const [audio, setAudio] = useState();
@@ -70,6 +70,7 @@ let PitchDetect = () => {
   let recordAudio = () => {
     navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
       const mediaRecorder = new MediaRecorder(stream);
+      const now = Date.now();
       mediaRecorder.start();
 
       const audioChunks = [];
@@ -81,8 +82,18 @@ let PitchDetect = () => {
         setAudio(audioChunks);
 
         const audioBlob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+
+        const audioMetadata = {
+          audio: audioBlob,
+          date: now,
+          event: {
+            location: eventMetadata.location,
+            code: eventMetadata.code,
+          }
+        };
+
         try {
-          let pinnedAudio = await postAudioMetadaToPinata(audioBlob);
+          let pinnedAudio = await postAudioMetadaToPinata(audioMetadata);
           setAudioPin(pinnedAudio);
         } catch (e) {
           console.log('error', e);
