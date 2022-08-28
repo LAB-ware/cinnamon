@@ -1,12 +1,13 @@
 import './App.css';
-import PitchDetect from './components/PitchDetect';
+import EventVerification from './components/EventVerification/EventVerification';
+import PitchDetect from './components/PitchDetect/PitchDetect';
 
 function App() {
   return (
     <div className='App'>
       <header className='App-header'>
         Cinnamon
-        <PitchDetect />
+        <EventVerification />
       </header>
     </div>
   );
