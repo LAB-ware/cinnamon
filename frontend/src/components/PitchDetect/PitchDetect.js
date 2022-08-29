@@ -102,7 +102,7 @@ let PitchDetect = (props) => {
           if (pinnedAudio) {
             setMinting(true);
             const mintRes = await axios.post(
-              'http://localhost:8080/api/cinnamons/mint',
+              `http://${process.env.REACT_APP_BACKEND_HOST}:8080/api/cinnamons/mint`,
               {
                 eth_address: ethAddress,
                 nftData: {
