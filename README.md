@@ -2,6 +2,12 @@
 
 A unique sound ID with an inaudible frequency is used during live events listened to by the app to generate an NFT to unlock submarined content.
 
+## Demo
+
+#### Brace yourself... HIGH PITCH SOUND 🙉
+
+https://drive.google.com/file/d/17seioe0Mf7tlQ2McOgrVEyJtN-_aVfRk/view?usp=drivesdk
+
 ## Running the Project
 
 ### Env
