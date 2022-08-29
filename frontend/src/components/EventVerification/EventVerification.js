@@ -64,22 +64,17 @@ const EventVerification = () => {
 
   return (
     <div className='AppContent'>
-      {!event.code && (
-        <div className='EventVerificationContainer'>
-          <div className='EventVerificationCodeInput'>
-            <input
-              onKeyUp={(e) => {
-                getEventCode(e);
-              }}
-              className='PinCodeInput'
-              type='text'
-              id='PinCodeInput'
-              maxLength='6'
-            />
-            <div className='EventVerificationText'>Enter Event Code Above</div>
+      {!location.coords?.longitude && !location.coords?.latitude &&
+        <div>Gathering location data... Please check your location permissions before continuing.</div>
+      }
+      {!event.code && location.coords?.longitude && location.coords?.latitude &&
+        <div className="EventVerificationContainer">
+          <div className="EventVerificationCodeInput">
+            <input onKeyUp={(e) => {getEventCode(e)}} className="PinCodeInput" type="text" id="PinCodeInput" maxLength="6" />
+            <div className="EventVerificationText">Enter Event Code Above</div>
           </div>
         </div>
-      )}
+      }
       {event.code && event.location && <PitchDetect eventMetadata={event} />}
     </div>
   );
