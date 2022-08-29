@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PitchDetect from '../PitchDetect/PitchDetect';
 import './EventVerification.css'
 
-const testEventCode = 123456;
+const eventDetails = {
+  code: '123456',
+  name: 'Pinata Hackathon'
+};
 
 const EventVerification = () => {
   const [event, setEvent] = useState({});
@@ -10,22 +13,21 @@ const EventVerification = () => {
   const [location, setLocation] = useState({});
 
   useEffect(() => {
-    gatherEventDetails();
-  }, [])
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+    if (location && code) {
+      const event = {code: code, location: [location.coords.latitude, location.coords.longitude], name: eventDetails.name};
+      setEvent(event);
+    }
+  }, [location, code]);
 
   /**
    *  Create input for code
    *  Set code and location into event object
    *  Pass event object as prop to PitchDetect component
    */
-
-  function gatherEventDetails() {
-    getLocation();
-
-    if (code && location) {
-      setEvent({code: code, location: [location.coords.latitude, location.coords.longitude]});
-    }
-  }
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -38,8 +40,22 @@ const EventVerification = () => {
     }
   }
 
-  function getEventCode(e) { 
-    console.log(e.target.value);
+  const getEventCode = (e) => {
+    const value = e.target.value;
+
+    if (value.length === 6) {
+      document.getElementById('PinCodeInput').blur();
+
+      if (eventDetails.code === value) {
+        setCode(value);
+      } else {
+        e.target.value = '';
+        document.getElementById('PinCodeInput').focus();
+      }
+    }
+
+    if (code && location) {
+    }
   }
 
   return(
@@ -47,7 +63,7 @@ const EventVerification = () => {
       {!event.code &&
         <div className="EventVerificationContainer">
           <div className="EventVerificationCodeInput">
-            <input onChange={(e) => {getEventCode(e)}} className="PinCodeInput" type="number" maxLength="6" />
+            <input onKeyUp={(e) => {getEventCode(e)}} className="PinCodeInput" type="text" id="PinCodeInput" maxLength="6" />
             <div className="EventVerificationText">Enter Event Code Above</div>
           </div>
         </div>
