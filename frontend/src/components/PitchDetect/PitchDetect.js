@@ -6,7 +6,7 @@ import LongPress from '../Buttons/LongPress';
 
 const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
-let PitchDetect = (eventMetadata) => {
+let PitchDetect = (props) => {
   const [listen, toggleListen] = useState(false);
   const [frequency, setFrequency] = useState(0);
   const [audio, setAudio] = useState();
@@ -87,8 +87,8 @@ let PitchDetect = (eventMetadata) => {
           audio: audioBlob,
           date: now,
           event: {
-            location: eventMetadata.location,
-            code: eventMetadata.code,
+            location: props.eventMetadata.location,
+            code: props.eventMetadata.code,
           }
         };
 
@@ -132,7 +132,13 @@ let PitchDetect = (eventMetadata) => {
         }}
         text={!listen ? 'Press to Listen' : 'Listening...'}
       />
-      <div className='frequencyDisplay'>{frequency} Display Loading State</div>
+      <div className='frequencyDisplay'>
+        { props.eventMetadata &&
+          <div>
+            Welcome to {props.eventMetadata.name}!
+          </div>
+        }
+      </div>
     </div>
   );
 };

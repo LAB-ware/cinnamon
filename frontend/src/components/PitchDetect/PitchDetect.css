@@ -1,10 +1,10 @@
 .pitchDetectContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 20px;
   align-items: center;
   justify-content: space-between;
-  height: 60vh;
+  height: auto;
 }
 
 .frequencyDisplay {
@@ -15,16 +15,17 @@
   display: flex;
   align-items: center;
   text-align: center;
-  height: 300px;
-  width: 300px;
-  border: 1px solid #000;
+  height: 200px;
+  width: 200px;
+  border: 1px solid #eee;
   border-radius: 100%;
   padding: 10px;
   justify-content: center;
   cursor: pointer;
-  pointer-events: pointer;
+  pointer-events: auto;
   font-size: 18px;
   font-weight: 600;
+  box-shadow: 1px 1px 1px #eee;
 }
 
 .conic {

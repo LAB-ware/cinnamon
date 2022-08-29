@@ -6,7 +6,7 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
-        Cinnamon
+        <h3>Cinnamon</h3>
         <EventVerification />
       </header>
     </div>
