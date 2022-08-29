@@ -6,7 +6,7 @@ A unique sound ID with an inaudible frequency is used during live events listene
 
 #### Brace yourself... HIGH PITCH SOUND 🙉
 
-https://drive.google.com/file/d/17seioe0Mf7tlQ2McOgrVEyJtN-_aVfRk/view?usp=drivesdk
+https://drive.google.com/file/d/17seioe0Mf7tlQ2McOgrVEyJtN-_aVfRk/view?usp=sharing
 
 ## Running the Project
 
