@@ -17,21 +17,10 @@ A unique sound ID with an inaudible frequency is used during live events listene
 
 - `npm start` to start the dev environment
 
-### Mobile
-
-- You can use ngrok to open a tunnel to port 3000 or whichever port you decide to run the app in
-- Under the same network you can also enter the IP address the node server is running on
-
 ### Walkthrough
 
-- Users will be prompted to enter a 6 digit pin at the event they are attending. In our test case, our 6 digit pin is `746282`.
-
-  <img width="auto" height="400" alt="Screen Shot 2022-08-28 at 7 46 59 PM" src="https://user-images.githubusercontent.com/90666446/187102648-70b7843f-3270-4b2f-be46-cb33192141e3.png">
-
-- Once the correct pin is entered, users are prompted to the sound recording screen.
-
-  <img width="auto" height="400" alt="Screen Shot 2022-08-28 at 7 47 43 PM" src="https://user-images.githubusercontent.com/90666446/187102684-8b8fa8f0-ad50-4328-b87f-eae30d6dfe4e.png">
-
-- With a single press, cinnamon is able to listen and record live audio feed for a continuous 3 seconds. After the recording ends, that audio chunk will be pinned to Piñata and minted into an NFT. Once the user has ownership of the NFT the user will be eligible to unlock exclusive content via submarine.
-
-  <img width="auto" height="400" alt="Screen Shot 2022-08-28 at 7 48 38 PM" src="https://user-images.githubusercontent.com/90666446/187102745-edbc5430-b610-40f5-ba63-7cc6e764bc21.png">
+| Screen      | Description |
+| ----------- | ----------- |
+| <img height="400" width="500" alt="Screen Shot 2022-08-28 at 7 46 59 PM" src="https://user-images.githubusercontent.com/10108593/187116962-1aa71f93-d722-4de3-b9c1-8ce0d7322fcb.png"> | Users will be prompted to enter their ETH address or connect to MetaMask wallet and a 6 digit pin at the event they are attending. In our test case, our 6 digit pin is “123456” |
+| <img height="400" width="500" alt="Screen Shot 2022-08-28 at 7 47 43 PM" src="https://user-images.githubusercontent.com/10108593/187116964-2f4bbe56-eaff-4db0-9e8f-0f6de45d8d72.png"> | Once the correct pin is entered, users are prompted to the sound recording screen. |
+| <img height="400" width="500" alt="Screen Shot 2022-08-28 at 7 48 38 PM" src="https://user-images.githubusercontent.com/10108593/187117578-bbfd9e78-090d-4ca4-a140-b6da637903b7.png"> | With a single press, cinnamon is able to listen and record live audio feed for a continuous 3 seconds. After the recording ends, that audio chunk will be pinned to Piñata and minted into an NFT. Once the user has ownership of the NFT the user will be eligible to unlock exclusive content via submarine. |
