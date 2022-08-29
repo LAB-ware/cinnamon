@@ -16,6 +16,7 @@ A unique sound ID with an inaudible frequency is used during live events listene
 ### Walkthrough
 
 * Users will be prompted to enter a 6 digit pin at the event they are attending. In our test case, our 6 digit pin is “123456”.
+* <img width="1017" alt="Screen Shot 2022-08-28 at 7 45 46 PM" src="https://user-images.githubusercontent.com/90666446/187102575-4417e67b-d3c6-473c-96fe-e18d55c1fab6.png">
 
 * Once the correct pin is entered, users are prompted to the sound recording screen.  With a long-press, cinnamon is able to listen to live audio feed and detect patterns in frequencies within the feed. If the frequency captured matches the desired frequency stored by the event host, that audio chunk will be minted into an NFT that is makes the user eligible to unlock exclusive content via submarine. These NFTs will be stored in Piñata. 
 
