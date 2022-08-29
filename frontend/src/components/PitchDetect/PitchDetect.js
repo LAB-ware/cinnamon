@@ -165,7 +165,7 @@ let PitchDetect = (props) => {
         {nft && (
           <div className='submarine'>
             <a
-              href='https://app.submarine.me/6fXg1oQ7iVz6vWHBff9Sr8'
+              href='https://app.submarine.me/snBPaSkcaoxC2gTx8AjMsK'
               target='_blank'
               rel='noreferrer'
             >
