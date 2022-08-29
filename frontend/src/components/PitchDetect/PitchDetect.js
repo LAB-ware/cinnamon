@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef} from 'react';
 import Wad from 'web-audio-daw';
 import axios from 'axios';
 import './PitchDetect.css';
-import LongPress from '../Buttons/LongPress';
 
 const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
@@ -64,7 +63,7 @@ let PitchDetect = (props) => {
       tuner.stopUpdatingPitch();
       voice.stop();
       cancelAnimationFrame(requestListenFrame.current);
-    }, 3500);
+    }, 3000);
   };
 
   let recordAudio = () => {
@@ -80,21 +79,20 @@ let PitchDetect = (props) => {
 
       mediaRecorder.addEventListener('stop', async () => {
         setAudio(audioChunks);
-
         const audioBlob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
-
         const audioMetadata = {
           audio: audioBlob,
           date: now,
           event: {
             location: props.eventMetadata.location,
             code: props.eventMetadata.code,
-          }
+          },
         };
 
         try {
-          let pinnedAudio = await postAudioMetadaToPinata(audioMetadata);
-          setAudioPin(pinnedAudio);
+          console.log(audioMetadata);
+          // let pinnedAudio = await postAudioMetadaToPinata(audioMetadata);
+          // setAudioPin(pinnedAudio);
         } catch (e) {
           console.log('error', e);
         }
@@ -114,30 +112,19 @@ let PitchDetect = (props) => {
 
   return (
     <div className='pitchDetectContainer'>
-      <LongPress
+      <button
         className={`frequencyListener ${listen ? 'conic' : ''}`}
-        forceStop={audio && !listen}
         onClick={() => {
-          console.log('clicked');
-        }}
-        onLongPress={() => {
-          console.log('start long press');
           toggleListen(true);
           detectFrequency();
         }}
-        onLongPressDone={() => {
-          console.log('stopped long press');
-          toggleListen(false);
-          // console.log(audio);
-        }}
-        text={!listen ? 'Press to Listen' : 'Listening...'}
-      />
+      >
+        {!listen ? 'Press to Listen' : 'Searching for beacon...'}
+      </button>
       <div className='frequencyDisplay'>
-        { props.eventMetadata &&
-          <div>
-            Welcome to {props.eventMetadata.name}!
-          </div>
-        }
+        {props.eventMetadata && (
+          <div>Welcome to {props.eventMetadata.name}!</div>
+        )}
       </div>
     </div>
   );

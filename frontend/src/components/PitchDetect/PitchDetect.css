@@ -1,7 +1,6 @@
 .pitchDetectContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
   align-items: center;
   justify-content: space-between;
   height: auto;
@@ -15,9 +14,10 @@
   display: flex;
   align-items: center;
   text-align: center;
-  height: 200px;
-  width: 200px;
-  border: 1px solid #eee;
+  height: 300px;
+  width: 300px;
+  background-color: rgb(255, 247, 247);
+  border: 1px solid #000;
   border-radius: 100%;
   padding: 10px;
   justify-content: center;
@@ -34,8 +34,8 @@
   z-index: 0;
   overflow: hidden;
   padding: 2rem;
-  background-color: #414449;
-  border: 2px solid #414449;
+  background-color: rgb(255, 247, 247);
+  border: 2px solid rgb(255, 247, 247);
 }
 
 .conic::before {
@@ -64,7 +64,7 @@
   top: 6px;
   width: calc(100% - 14px);
   height: calc(100% - 14px);
-  background: #414449;
+  background: rgb(255, 247, 247);
   border-radius: 100%;
   animation: opacityChange 3s infinite linear;
 }
