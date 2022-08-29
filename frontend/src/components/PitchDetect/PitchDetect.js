@@ -1,24 +1,20 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import Wad from 'web-audio-daw';
 import axios from 'axios';
+import {EthContext} from '../../App';
 import './PitchDetect.css';
 
 const PINATA_URL = 'https://api.pinata.cloud/pinning';
 
 let PitchDetect = (props) => {
+  const ethAddress = useContext(EthContext);
   const [listen, toggleListen] = useState(false);
   const [frequency, setFrequency] = useState(0);
   const [audio, setAudio] = useState();
   const [audioPin, setAudioPin] = useState();
+  const [nft, setNft] = useState();
+  const [minting, setMinting] = useState(false);
   const requestListenFrame = useRef();
-
-  // // Mint the NFT
-  useEffect(() => {
-    // Make API call
-    if (audio) {
-      console.log(audio);
-    }
-  }, [audio]);
 
   // Initiate the mic and audio processor
   // Browser prompt for permission to access your microphone.
@@ -41,7 +37,7 @@ let PitchDetect = (props) => {
     );
 
     console.log('Metadata upload successful', audioMetadataRes.data);
-    return `ipfs://${audioMetadataRes.data.IpfsHash}`;
+    return audioMetadataRes.data;
   };
 
   const logPitch = () => {
@@ -82,6 +78,7 @@ let PitchDetect = (props) => {
         const audioBlob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
         const audioMetadata = {
           audio: audioBlob,
+          owner: ethAddress,
           date: now,
           event: {
             location: props.eventMetadata.location,
@@ -90,9 +87,39 @@ let PitchDetect = (props) => {
         };
 
         try {
-          console.log(audioMetadata);
-          // let pinnedAudio = await postAudioMetadaToPinata(audioMetadata);
-          // setAudioPin(pinnedAudio);
+          let pinnedAudio = await postAudioMetadaToPinata(audioMetadata);
+          setAudioPin(pinnedAudio);
+
+          if (pinnedAudio) {
+            setMinting(true);
+            const mintRes = await axios.post(
+              'http://localhost:8080/api/cinnamons/mint',
+              {
+                eth_address: ethAddress,
+                nftData: {
+                  metadata: {
+                    ...audioMetadata,
+                    ...pinnedAudio,
+                  },
+                  metadataUrl: `ipfs://${pinnedAudio.IpfsHash}`,
+                },
+              },
+              {
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+
+            const nftUrl = mintRes.data.metadataUrl.replace(
+              'ipfs://',
+              'https://trujo.mypinata.cloud/ipfs/'
+            );
+
+            setNft(nftUrl);
+            setMinting(false);
+          }
         } catch (e) {
           console.log('error', e);
         }
@@ -124,6 +151,17 @@ let PitchDetect = (props) => {
       <div className='frequencyDisplay'>
         {props.eventMetadata && (
           <div>Welcome to {props.eventMetadata.name}!</div>
+        )}
+        {minting && <div className='minting'>Minting...</div>}
+        {nft && (
+          <div className='submarine'>
+            <a
+              href='https://app.submarine.me/6fXg1oQ7iVz6vWHBff9Sr8'
+              target='_blank'
+            >
+              Unlock Content
+            </a>
+          </div>
         )}
       </div>
     </div>

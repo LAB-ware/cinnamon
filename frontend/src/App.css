@@ -25,6 +25,11 @@
   color: white;
 }
 
+.eth-address-input {
+  width: 300px;
+  padding: 10px;
+}
+
 .MetaMask-container {
   display: flex;
   flex-direction: column;

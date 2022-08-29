@@ -36,38 +36,34 @@ router.post('/mint', async (req, res) => {
   console.log('current gas prices', gasPrice);
 
   let senderAccount;
-  if (process.env.NETWORK === 'rinkeby') {
-    senderAccount = process.env.LABWARE_GOERLI_ACCOUNT;
-  } else if (process.env.NETWORK === 'goerli') {
+  if (req.body.ethAddress) {
+    senderAccount = req.body.ethAddress;
+  } else if (process.env.NETWORK === 'rinkeby') {
     senderAccount = process.env.LABWARE_RINKEBY_ACCOUNT;
+  } else if (process.env.NETWORK === 'goerli') {
+    senderAccount = process.env.LABWARE_GOERLI_ACCOUNT;
   } else {
     senderAccount = (await web3.eth.getAccounts())[0];
   }
 
   cinnamonInstance.methods
-    .mint('test')
+    .mint(req.body.nftData.metadataUrl)
     .send({from: senderAccount})
     .on('receipt', (receipt) => {
       console.log('minted cinnamon', receipt);
-      // const newCinnamon = new CinnamonSchema({
-      //   metadata: req.body.metadata,
-      //   metadataUrl: req.body.metadataUrl,
-      //   nftAssetUrl: req.body.nftAssetUrl,
-      // });
+      const newCinnamon = new CinnamonSchema(req.body.nftData);
 
-      // console.log('saving cinnamon data to db', newCinnamon);
-      // newCinnamon.save((err, doc) => {
-      //   if (err) {
-      //     return res.status(400).json({
-      //       value: doc,
-      //       msg: 'Unable to save cinnamon.',
-      //     });
-      //   }
-      //   res.status(200).send(doc);
-      // });
+      console.log('saving cinnamon data to db', newCinnamon);
+      newCinnamon.save((err, doc) => {
+        if (err) {
+          return res.status(400).json({
+            value: doc,
+            msg: 'Unable to save cinnamon.',
+          });
+        }
+        res.status(200).send(doc);
+      });
     });
-
-  res.send('mint complete');
 });
 
 export default router;
