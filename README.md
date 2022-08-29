@@ -21,7 +21,7 @@ A unique sound ID with an inaudible frequency is used during live events listene
 * Once the correct pin is entered, users are prompted to the sound recording screen.  
 <img width="auto" height="400" alt="Screen Shot 2022-08-28 at 7 47 43 PM" src="https://user-images.githubusercontent.com/90666446/187102684-8b8fa8f0-ad50-4328-b87f-eae30d6dfe4e.png">
 
-* With a single press, cinnamon is able to listen to live audio feed and detect patterns(beacons) in frequencies within the feed for a continuous 3 seconds. If the audio chunk contains the frequency matching the desired frequency stored by the event host, that audio chunk will be minted into an NFT that makes the user eligible to unlock exclusive content via submarine. These NFTs will be stored in Piñata. 
+* With a single press, cinnamon is able to listen  and record live audio feed for a continuous 3 seconds. After the recording ends, that audio chunk will be pinned to Piñata and minted into an NFT. Once the user has ownership of the NFT the user  will be eligible to unlock exclusive content via submarine.
 <img width="auto" height="400" alt="Screen Shot 2022-08-28 at 7 48 38 PM" src="https://user-images.githubusercontent.com/90666446/187102745-edbc5430-b610-40f5-ba63-7cc6e764bc21.png">
 
 
