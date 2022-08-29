@@ -62,7 +62,15 @@ let PitchDetect = (props) => {
     }, 3000);
   };
 
-  let recordAudio = () => {
+  const blobToBase64 = (blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const recordAudio = () => {
     navigator.mediaDevices.getUserMedia({audio: true}).then((stream) => {
       const mediaRecorder = new MediaRecorder(stream);
       const now = Date.now();
@@ -76,8 +84,9 @@ let PitchDetect = (props) => {
       mediaRecorder.addEventListener('stop', async () => {
         setAudio(audioChunks);
         const audioBlob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+        const audioBase64 = await blobToBase64(audioBlob);
         const audioMetadata = {
-          audio: audioBlob,
+          audio: audioBase64,
           owner: ethAddress,
           date: now,
           event: {
@@ -158,6 +167,7 @@ let PitchDetect = (props) => {
             <a
               href='https://app.submarine.me/6fXg1oQ7iVz6vWHBff9Sr8'
               target='_blank'
+              rel='noreferrer'
             >
               Unlock Content
             </a>
