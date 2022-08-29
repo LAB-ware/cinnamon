@@ -28,3 +28,6 @@ A unique sound ID with an inaudible frequency is used during live events listene
 ### Future Enhancements
 
 * Listen for ultrasonic frequencies (currently limited to mic/speaker capabilities of current device)
+* Payment for unlockable content
+* Notifications and unlockable content based on geolocation
+* Unique unlockable content based on frequency patterns
