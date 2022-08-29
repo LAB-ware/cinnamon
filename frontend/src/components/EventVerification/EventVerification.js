@@ -3,7 +3,7 @@ import PitchDetect from '../PitchDetect/PitchDetect';
 import './EventVerification.css';
 
 const eventDetails = {
-  code: '123456',
+  code: '746282',
   name: 'Pinata Hackathon',
 };
 
