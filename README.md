@@ -11,7 +11,7 @@ A unique sound ID with an inaudible frequency is used during live events listene
 ### Backend
 
 * `npm start` to start the dev environment
-* `npm start:prod` to ttart the prod environment
+* `npm start:prod` to start the prod environment
 
 ### Walkthrough
 
